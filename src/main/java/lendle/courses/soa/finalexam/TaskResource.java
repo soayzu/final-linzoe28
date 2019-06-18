@@ -8,11 +8,13 @@ package lendle.courses.soa.finalexam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -24,6 +26,7 @@ public class TaskResource {
      * question 6 (10%):
      * add DI for taskService
      */
+    @Autowired
     private TaskService taskService=null;
 
     public void setTaskService(TaskService taskService) {
@@ -42,7 +45,10 @@ public class TaskResource {
     add the required annotations and codes to complete the implementation
     of this service method
     */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public void addTask(Task task){
+        this.taskService.addTask(task);
     }
     
     @PUT
@@ -56,6 +62,9 @@ public class TaskResource {
     add the required annotations and codes to complete the implementation
     of this service method
     */
-    public void deleteTask(int id){
+    @DELETE
+    @Path("{id}")
+    public void deleteTask(@PathParam("id") int id){
+       this.taskService.deleteTask(id);
     }
 }
